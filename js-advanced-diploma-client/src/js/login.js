@@ -52,7 +52,7 @@ export const createLoginPage = () => {
       app.innerHTML = ''
       app.append(loader);
       await login(formLoginInput.value, formPassInput.value).then((res) => {
-        if (res.payload !== null) {
+        if (res.payload) {
           router.navigate('/account');
           localStorage.setItem('token', res.payload.token);
         } else {

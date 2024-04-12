@@ -253,6 +253,10 @@ export const createNewTranslation = (data) => {
       newTransNumbInput.classList.remove('error');
       newTransNumbLabel.classList.remove('error-label');
       createError(newTransSumInput, 'Введите значение больше 0');
+    } else if (newTransSumInput.value > data.balance) {
+      newTransSumInput.classList.add('error');
+      newTransSumLabel.classList.add('error-label');
+      createError(newTransSumInput, 'Недостаточно средств');
     } else {
       newTransNumbInput.classList.remove('error');
       newTransSumInput.classList.remove('error');
