@@ -4,6 +4,7 @@
 - [Технологии](#технологии)
 - [Начало работы](#разработка)
 - [Тестирование](#тестирование)
+- [Визуал](#скриншоты)
 
 ## Технологии
   ### Frontend
@@ -49,6 +50,15 @@ npm start
 ```sh
 npx cypress open
 ```
+
+
+## Скриншоты
+  ![](./screenshots/chrome_4tVBgK1dNm.jpg)
+  ![](./screenshots/chrome_PcsDVmgAMz.jpg)
+  ![](./screenshots/chrome_WFJD27FSKg.jpg)
+  ![](./screenshots/chrome_dXN6FHeEHn.jpg)
+  ![](./screenshots/chrome_jlj5nC551k.jpg)
+  ![](./screenshots/chrome_ruJwr5WjdZ.jpg)
 
 ## Команда проекта
 - [Артём Кряквин](https://t.me/art_kryy) — Frontend-developer
