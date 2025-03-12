@@ -12,7 +12,7 @@ module.exports = {
 
 const fs = require('fs')
 
-const PUBLIC_DIR = './public'
+const PUBLIC_DIR = 'public'
 
 function readData() {
 	return JSON.parse(fs.readFileSync(`${PUBLIC_DIR}/data.json`))
