@@ -7,25 +7,32 @@ module.exports = {
 	premakeAccounts,
 	formatAmount,
 	generateAccountId,
-	pregenerateHistory
+	pregenerateHistory,
 }
 
-const fs = require('fs')
-
-const PUBLIC_DIR = 'public'
+const fs = require("fs")
+const PUBLIC_DIR = "./public"
+const dataFilePath = `${PUBLIC_DIR}/data.json`
 
 function readData() {
-	return JSON.parse(fs.readFileSync(`${PUBLIC_DIR}/data.json`))
+	if (!fs.existsSync(dataFilePath)) {
+		console.error("data.json file not found")
+		return null
+	}
+	return JSON.parse(fs.readFileSync(dataFilePath))
 }
 
 function writeData(dataToWrite) {
-	fs.writeFileSync(`${PUBLIC_DIR}/data.json`, JSON.stringify(dataToWrite, null, 4))
+	fs.writeFileSync(
+		`${PUBLIC_DIR}/data.json`,
+		JSON.stringify(dataToWrite, null, 4)
+	)
 }
 
-function response(payload = null, error = '') {
+function response(payload = null, error = "") {
 	return JSON.stringify({
 		payload,
-		error
+		error,
 	})
 }
 
@@ -37,15 +44,15 @@ function generateAccountId() {
 	return Array(26)
 		.fill(0)
 		.map(() => Math.floor(Math.random() * 9))
-		.join('')
+		.join("")
 }
 
-function makeAccount(mine = false, preseededId = '') {
+function makeAccount(mine = false, preseededId = "") {
 	return {
 		account: preseededId || generateAccountId(),
 		mine,
 		balance: 0,
-		transactions: []
+		transactions: [],
 	}
 }
 
@@ -54,8 +61,8 @@ function pregenerateMineCurrencies(data, knowCurrencies) {
 	knowCurrencies.forEach(currency => {
 		if (!currencies[currency]) {
 			currencies[currency] = {
-				"amount": Math.random()*100,
-				"code": currency
+				amount: Math.random() * 100,
+				code: currency,
 			}
 		}
 	})
@@ -73,27 +80,32 @@ function premakeAccounts(data, newAccounts, mine = false) {
 }
 
 function pregenerateHistory(data, accounts, mine = false) {
-	premakeAccounts(data, accounts, mine);
+	premakeAccounts(data, accounts, mine)
 	const months = 10
 	const transactionsPerMonth = 5
 	accounts.forEach(accountId => {
 		const account = data.accounts[accountId]
 		if (account.transactions.length >= months * transactionsPerMonth) {
-			return;
+			return
 		}
 
 		const dayAsMs = 24 * 60 * 60 * 1000
 		const monthAsMs = 30 * dayAsMs
 		const yearAsMs = 12 * monthAsMs
-		let date = Date.now() - yearAsMs 
+		let date = Date.now() - yearAsMs
 
 		for (let month = 0; month <= months; month++) {
-			for (let transaction = 0; transaction <= transactionsPerMonth; transaction++) {
+			for (
+				let transaction = 0;
+				transaction <= transactionsPerMonth;
+				transaction++
+			) {
 				const sign = Math.random() < 0.5 ? 1 : -1
 				const amount = formatAmount(Math.random() * 10000)
 
 				const otherAccountId = generateAccountId()
-				const randomDaysOffset = ((Math.random() - 0.5) * Math.random() * 5) * dayAsMs
+				const randomDaysOffset =
+					(Math.random() - 0.5) * Math.random() * 5 * dayAsMs
 
 				account.transactions.push({
 					date: new Date(date + randomDaysOffset).toISOString(),
